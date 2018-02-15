@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+
+    <div class="col-lg-3">
+        <form th:method="POST" th:action="@{documentsList.html}" th:object="${searchCommand}">
+            <div class="row">
+                <div>
+                    <input th:field="*{phrase}" placeholder="Fraza" class="form-control"
+                           th:classappend="${#fields.hasErrors('phrase')}?'is-invalid'"/>
+                    <div class="error text-danger" th:if="${#fields.hasErrors('phrase')}">
+                        <p th:each="err : ${#fields.errors('phrase')}" th:text="${err}"></p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div></div>
+
+                <div >
+                    <a th:if="${searchCommand.isEmpty() eq false or #fields.hasErrors('*')}" th:href="@{documentsList.html(all)}" class="btn btn-success">
+                        <span class="glyphicon glyphicon-refresh"></span> Pokaż wszystko
+                    </a>
+                </div>
+
+                <div >
+                    <button type="submit" class="btn btn-info">
+                        <span class="glyphicon glyphicon-search"></span> Wyszukaj
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <br>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Student</th>
+            <th></th>
+        </tr>
+
+        <tr th:each="student : ${students}">
+            <td th:text="${student.imie+' '+student.nazwisko}"></td>
+            <td>
+                <table class="table">
+                    <tr>
+                        <th>Typ Dokumentu</th>
+                        <th>Status</th>
+                        <th>Opcje</th>
+                    </tr>
+                    <tr th:each="document : ${documentsList}" th:if="${document.user.id==student.user.id}">
+                        <td th:text="${document.documentType.nazwa}"></td>
+                        <td th:if="${document.document_status==0}" th:text="Oczekujący" style="color: orange;"></td>
+                        <td th:if="${document.document_status==1}" th:text="Zaakceptowany" style="color: green;"></td>
+                        <td th:if="${document.document_status==2}" th:text="Odrzucony" style="color: red;"></td>
+                        <td>
+                            <a th:href="${'/pdfDoc?docId='+document.getId()}"><button class="btn btn-standard">Podgląd</button></a>
+                            <a sec:authorize="hasRole('ROLE_KIEROWNIK')" th:href="${'/documentAccept?docId='+document.getId()}"><button class="btn btn-success">Zaakceptuj</button></a>
+                            <a sec:authorize="hasRole('ROLE_KIEROWNIK')" th:href="${'/documentDecline?docId='+document.getId()}"><button class="btn btn-danger">Odrzuć</button></a>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

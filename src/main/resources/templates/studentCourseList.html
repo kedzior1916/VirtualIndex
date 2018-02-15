@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Lista kierunków studenta</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div class="container" id="main">
+
+    <span th:if="${#lists.isEmpty(courseListPage)}" style="padding: 30px;">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>  Informacja</div>
+                <div class="panel-body">Twoja rekrutacja nie została jeszcze rozpatrzona bądź nie przeszedłeś tego etapu pomyślnie.</div>
+            </div>
+    </span>
+    <span th:unless="${#lists.isEmpty(courseListPage)}">
+
+<h2>Twoje kierunki</h2>
+<table class="table table-striped">
+
+    <thead class="thead-dark">
+    <tr>
+        <th>Nazwa kierunku</th>
+        <th>Typ</th>
+        <th>Rodzaj</th>
+        <th>Wypisz się</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="recruitment : ${courseListPage}">
+        <td> <a  th:align="right"  th:href="@{/courseList.html(id=${recruitment.course.id})}">[[${recruitment.course.nazwa}]]</a></td>
+        <td th:text="${recruitment.course.typ}"></td>
+        <td th:text="${recruitment.course.rodzaj}"></td>
+
+        <td><a class="btn btn-danger" th:href="@{studentsList.html(did=${recruitment.id})}">Opuść kierunek</a></td>
+    </tr>
+
+    </tbody>
+</table>
+
+        </span>
+    <a sec:authorize="hasRole('KIEROWNIK')" class="btn btn-success" href="courseForm.html">Dodaj Nowy</a>
+</div>
+
+
+
+
+
+
+
+
+
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

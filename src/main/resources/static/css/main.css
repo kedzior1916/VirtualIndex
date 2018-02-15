@@ -1,0 +1,101 @@
+body{
+    font-family: 'Roboto Slab', sans-serif;
+    background-color: #dddddd;
+}
+
+.navbar-inverse{
+    background-color: rgb(54, 60, 88);
+    color: orange;
+}
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-brand, .navbar-inverse a{
+    color: orange;
+}
+
+#main{
+    min-height: 600px;
+    background-color: #efefef;
+}
+#top {
+    background: #3d3d3d;
+    padding: 5px 0;
+}
+#top .contact {
+    color: #eeeeee;
+    font-size: 12px;
+    padding-top: 5px;
+    margin: 0;
+}
+#top a {
+    color: #fff;
+}
+#top ul.menulogowanie {
+    padding-top: 5px;
+    margin: 0;
+    text-align: right;
+    font-size: 12px;
+    list-style: none;
+}
+#top ul.menulogowanie > li {
+    display: inline-block;
+}
+#top ul.menulogowanie > li a {
+    color: #fff;
+    font-weight: bold;
+}
+#top ul.menulogowanie > li a:hover {
+    color: orange;
+}
+#top ul.menulogowanie > li + li:before {
+    content: "|\00a0";
+    padding: 0 5px;
+    color: #fff;
+}
+span.logicon{
+    color: #fff;
+    margin-right: 3px;
+}
+span.logoicon{
+    color: #338b15;
+
+}
+nav.navbar-light{
+    background-color: #fff;
+}
+.navbar{
+    border-radius: 0px;
+}
+.navbar-nav > li > a{
+    color: #545454;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.navbar-nav > li > a:hover{
+    color: #fff;
+    background-color: #4fbfa8;
+    transition: all 0.2s ease-in-out;
+}
+a.navbar-brand{
+    color: #000;
+}
+button.btn-loginn{
+    width: 100%;
+    letter-spacing: 2px;
+}
+#footer{
+    margin-top: 20px;
+    min-height: 100px;
+    color: #686868;
+    padding: 20px;
+}
+.jumbotron{
+    background-color: transparent;
+    text-align: center;
+}
+p.lead{
+    font-size: 16px;
+    color: #000;
+}
+.panel-heading{
+    font-weight: bold;
+}

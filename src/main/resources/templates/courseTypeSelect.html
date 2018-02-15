@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Wybór typu studiów</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+    <span style="padding: 10px">
+    <div class="panel panel-default">
+        <div class="panel-heading">Wybierz tryb studiów na które chcesz się zapisać</div>
+        <div class="panel-body" style="text-align: center">
+            <div class="row">
+                <div class="col-md-6">
+                    <a class="btn btn-primary" th:href="@{/courseTypeSelect2.html(tid=${1})}">Tryb stacjonarny</a>
+                </div>
+                <div class="col-md-6">
+                    <a class="btn btn-primary" th:href="@{/courseTypeSelect2.html(tid=${2})}">Tryb zaoczny</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </span>
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

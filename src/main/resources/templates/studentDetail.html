@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('studentDetail')"/>
+
+    <div id="main" class="container">
+        <div th:if="${student==false}" sec:authorize="hasAnyRole('ROLE_DZIEKANAT','ROLE_KIEROWNIK')">
+            <h1>Oceny studentów</h1>
+
+            <div class="col-lg-3">
+                <form th:method="POST" th:action="@{studentDetail.html?student=false}" th:object="${searchCommand}">
+                    <div class="row">
+                        <div>
+                            <input th:field="*{phrase}" placeholder="Fraza" class="form-control"
+                                   th:classappend="${#fields.hasErrors('phrase')}?'is-invalid'"/>
+                            <div class="error text-danger" th:if="${#fields.hasErrors('phrase')}">
+                                <p th:each="err : ${#fields.errors('phrase')}" th:text="${err}"></p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+
+                        <div></div>
+
+                        <div >
+                            <a th:if="${searchCommand.isEmpty() eq false or #fields.hasErrors('*')}" th:href="@{studentDetail.html(all)}" class="btn btn-success">
+                                <span class="glyphicon glyphicon-refresh"></span> Pokaż wszystko
+                            </a>
+                        </div>
+
+                        <div >
+                            <button type="submit" class="btn btn-info">
+                                <span class="glyphicon glyphicon-search"></span> Wyszukaj
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+
+            <table class="table table-bordered">
+                <tr>
+                    <th>Student </th>
+                    <th>Aktualny Semestr</th>
+                </tr>
+                <tr th:each="student : ${allStudents}" >
+                    <td th:text="${student.imie+' '+student.nazwisko}"></td>
+                    <td th:text="${student.semestr}"></td>
+                    <td>
+                        <table class="table table-condensed table-bordered">
+                            <tr>
+                                <th>Przedmiot</th>
+                                <th>Kierunek</th>
+                                <th>Semestr</th>
+                                <th>Termin</th>
+                                <th>Ocena</th>
+                            </tr>
+                            <tr th:each="grade : ${allGrades}" th:if="${grade.student.id==student.id}">
+                                <td th:text="${grade.subject.nazwa}"></td>
+                                <td th:text="${grade.course.nazwa}"></td>
+                                <td th:text="${grade.subject.semestr}"></td>
+                                <td th:text="${grade.termin}"></td>
+                                <td th:text="${grade.ocena}"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div th:if="${student==true}" sec:authorize="hasRole('ROLE_STUDENT')">
+            <h1 th:text="${course.nazwa}"></h1>
+            <h2>Twoje Oceny</h2>
+            <h3 th:text="'Aktualny Semestr:'+${studentInfo.semestr}"></h3>
+
+            <table class="table" th:each="subject : ${subjectList}">
+                <tr th:if="${subject.course.id} == ${course.id}">
+                    <th th:text="${subject.nazwa}+' Semestr: '+${subject.semestr}"></th>
+                </tr>
+                <tr >
+                    <td>
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Termin</th>
+                                <th>Ocena</th>
+                            </tr>
+                            <tr th:each="grade : ${studentGrades}" th:if="${grade.subject.id} == ${subject.id}">
+                                <td  th:if="${grade.termin} == 1" th:text="Pierwszy"></td>
+                                <td  th:if="${grade.termin} == 2" th:text="Drugi"></td>
+                                <td  th:if="${grade.termin} == 3" th:text="Trzeci"></td>
+                                <td  th:if="${grade.termin} > 3" th:text="Warunek"></td>
+                                <td th:text="${grade.ocena}"></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

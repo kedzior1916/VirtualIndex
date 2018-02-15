@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container">
+    <h1 class="col-md-4 col-md-offset-4">Wybierz przedmioty</h1>
+    <form class="col-md-4 col-md-offset-4" th:method="GET" th:action="@{/documentForm.html}" sec:authorize="isAuthenticated()">
+        <div class="row">
+            <div>
+                <input type="hidden" name="docId" th:value="${docId}">
+                <select class="form-control" name="przedmiot1">
+                    <option  value="">---Przedmiot---</option>
+                    <option th:each="subject : ${subjectList}" th:text="${subject.nazwa}" th:value="${subject.nazwa}"></option>
+                </select>
+                <select th:if="${docId==1}" class="form-control" name="przedmiot2">
+                    <option   value="">---Przedmiot---</option>
+                    <option th:each="subject : ${subjectList}" th:text="${subject.nazwa}" th:value="${subject.nazwa}"></option>
+                </select>
+                <select th:if="${docId==1}" class="form-control" name="przedmiot3">
+                    <option  value="">---Przedmiot---</option>
+                    <option th:each="subject : ${subjectList}" th:text="${subject.nazwa}" th:value="${subject.nazwa}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div></div>
+            <div >
+                <button name="generate" type="submit" class="btn btn-info" value="true">
+                    <span class="glyphicon glyphicon-search"></span> Dalej
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

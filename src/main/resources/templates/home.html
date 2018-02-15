@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Strona domowa</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<div id="main" class="container" >
+
+    <span sec:authorize="isAnonymous()">
+    <div class="jumbotron">
+        <h1>Wirtualny Indeks</h1>
+        <p class="lead">Witaj na stronie wirtualnego indeksu. Znajdziesz tutaj dużo przydatnych informacji na temat studiów. Aby w pełni korzystać z tego serwisu zarejestruj się.</p>
+        <p><a class="btn btn-lg btn-success" href="/registrationForm.html" role="button">Załóż konto już teraz!</a></p>
+    </div>
+
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-lg-4" style="text-align: center">
+            <h2>O serwisie</h2>
+            <p>Serwis ten powstał na potrzeby projektu semestralnego z przedmiotu Inżynieria Oprogramowania. System umożliwia wprowadzanie ocen studentom a także ich rejestrację na kierunki, specjalności. </p>
+        </div>
+        <div class="col-lg-4" style="text-align: center">
+            <h2>O serwisie</h2>
+            <p>Serwis ten powstał na potrzeby projektu semestralnego z przedmiotu Inżynieria Oprogramowania. System umożliwia wprowadzanie ocen studentom a także ich rejestrację na kierunki, specjalności. </p>
+
+        </div>
+        <div class="col-lg-4" style="text-align: center">
+            <h2>Kontakt</h2>
+            <p>Godziny otwarcia dziekanatu:</p>
+            <p>Pon-pt: 8:00 - 15:00</p>
+            <p><span class="glyphicon glyphicon-envelope"></span> contact@wirtual.edu.pl</p>
+            <p><span class="glyphicon glyphicon-phone-alt"></span> (22) 7923470</p>
+
+        </div>
+    </div>
+        </span>
+    <span sec:authorize="hasRole('USER')" style="padding: 30px;">
+            <div class="panel panel-default">
+                <div class="panel-heading"><span class="glyphicon glyphicon-info-sign"></span>  Informacja</div>
+                <div class="panel-body">W tym momencie jesteś zalogowany jako zwykły użytkownik. Aby posiadać pożądany status <b>studenta</b> musisz wypełnić formularz rejestracyjny. Powodzenia!</div>
+            </div>
+    </span>
+
+</div>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>
